@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <script type="text/babel">
+      var Hello = React.createClass({
+        getInitialState: function () {
+          console.log('getInitialState');
+          return {
+            opacity: 1.0,   
+            time: 1433245642536,
+          };
+        },
+        getDefaultProps: function () {
+          console.log('getDefaultProps');
+          return {
+            name: 'world',
+            job: 'WEB programmer'
+          }
+        },
+        componentWillMount: function () {
+          console.log('componentWillMount');
+          this.state.timeStr = this.state.time +1;
+
+        },
+        componentDidMount: function () {
+          console.log('componentDidMount');
+          this.timer = setTimeout(function () {
+            var opacity = this.state.opacity;
+            opacity -= .05;
+            if (opacity < 0.1) {
+              opacity = 1.0;
+            }
+            this.setState({
+              opacity: opacity
+            });
+            this.setProps({
+              name:'Monkey He'
+            });
+          }.bind(this), 100);
+        },
+        componentWillReceiveProps: function () {
+          console.log('componentWillReceiveProps');
+          this.setState({opacity: 0.1});
+        },
+        shouldComponentUpdate: function () {
+          console.log('shouldComponentUpdate');
+          return true;
+        },
+        componentWillUpdate: function () {
+          console.log('componentWillUpdate');
+        },
+        componentDidUpdate:function () {
+          console.log('componentDidUpdate');
+          
+        },
+        componentWillUnmount: function () {
+          console.log('componentWillUnmount');
+        },
+
+        render: function () {
+          return (
+            <div style={{opacity: this.state.opacity}}>
+              Hello {this.props.name}, you are a {this.props.job}
+              <p>today is {this.props.timeStr}</p>
+            </div>           
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <Hello name="Daisy He"/>,
+        document.getElementById('text')
+      );
+    </script>
+    <div id="text"></div>
+  </body>
+</html>
